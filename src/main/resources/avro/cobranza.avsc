@@ -1,0 +1,70 @@
+{
+  "type": "record",
+  "name": "PagoCredito",
+  "namespace": "com.gs.atc.bok.schemaRegistry",
+  "fields": [
+    {
+      "name": "transaccion",
+      "type": {
+        "type": "record",
+        "name": "Transaccion",
+        "fields": [
+          { "name": "id", "type": "string" },
+          { "name": "fechaHora", "type": "string" },
+          { "name": "nombre", "type": "string" },
+          { "name": "accion", "type": "string" },
+          { "name": "fechaInicioProceso", "type": "string" },
+          { "name": "fechaFinProceso", "type": "string" }
+        ]
+      }
+    },
+    {
+      "name": "operacion",
+      "type": {
+        "type": "record",
+        "name": "Operacion",
+        "fields": [
+          {
+            "name": "clienteUnico",
+            "type": {
+              "type": "record",
+              "name": "ClienteUnico",
+              "fields": [
+                { "name": "pais", "type": "int" },
+                { "name": "canal", "type": "int" },
+                { "name": "sucursal", "type": "int" },
+                { "name": "folio", "type": "int" }
+              ]
+            }
+          },
+          { "name": "fechaHoraOperacion", "type": "string" },
+          { "name": "importeTotal", "type": "double" },
+          { "name": "idOperacion", "type": ["null", "long"], "default": null },
+          { "name": "idProducto", "type": ["null", "int"], "default": null },
+          { "name": "idEstatus", "type": ["null", "int"], "default": null },
+          { "name": "usuarioEjecucion", "type": "string" },
+          { "name": "idAgente", "type": ["null", "int"], "default": null },
+          { "name": "folioAutorizacion", "type": ["null", "string"], "default": null },
+          { "name": "referencia", "type": ["null", "string"], "default": null },
+          { "name": "codigoTerminal", "type": ["null", "string"], "default": null },
+          { "name": "numeroContrato", "type": ["null", "string"], "default": null },
+          { "name": "idCanalOrigen", "type": "int" },
+          { "name": "idSucursalOrigen", "type": "int" },
+          { "name": "folioExpressCorresponsales", "type": ["null", "string"], "default": null },
+          { "name": "codigoDivisa", "type": ["null", "string"], "default": null },
+          { "name": "idPaisPedido", "type": "int" },
+          { "name": "idCanalPedido", "type": "int" },
+          { "name": "idSucursalPedido", "type": "int" },
+          { "name": "numeroPedido", "type": "int" },
+          { "name": "numeroTarjeta", "type": ["null", "string"], "default": null },
+          { "name": "fechaHoraAbono", "type": "string" },
+          { "name": "importe", "type": "string" },
+          { "name": "idProcesoPago", "type": ["null", "int"], "default": null },
+          { "name": "montoGema", "type": ["null", "int"], "default": null },
+          { "name": "idTipoProducto", "type": ["null", "string"], "default": null },
+          { "name": "idToken", "type": ["null", "string"], "default": null }
+        ]
+      }
+    }
+  ]
+}
