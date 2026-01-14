@@ -66,17 +66,17 @@ public class ShutdownConsumer {
 			LOGGER.info("No hay mensajes para insertar en BD");
 			return;
 		}
-
+		String llave = "";
 		List<PagoCredito> pagos = new ArrayList<>();
 		for (ConsumerRecord<String, PagoCredito> cr : eventosConsumidos) {
 			pagos.add(cr.value());
-			LOGGER.info("Preparando para insertar en BD: {}", cr.value().getOperacion().getClienteUnico());
+			llave = cr.key();
 		}
 
 		try {
 			pagoCreditoDAO.insertarBatch(pagos);
 		} catch (Exception e) {
-			LOGGER.error("Error insertando batch en BD", e);
+			LOGGER.error("Error insertando batch en BD"," Key: "+ llave, e);
 		}
 	}
 }

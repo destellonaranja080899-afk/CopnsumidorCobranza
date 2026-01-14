@@ -107,7 +107,7 @@ public class PagoCreditoDAO {
             if (count % batchSize != 0) {
                 ps.executeBatch();
                 con.commit();
-                LOGGER.info("Insertados {} registros en total.", count);
+                LOGGER.info("Insertados {} registros en total.", count,"Proccess end Succesfully");
             }
 
         } catch (SQLException e) {
