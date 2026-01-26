@@ -33,8 +33,8 @@ public class PagoCreditoDAO {
         int fifecha = Integer.parseInt(formatted);
 
         String sql = "INSERT INTO SAGOCREDITO.TA_ABN_CRED " +
-                "(FCIDTRX, FDFECHAHORA, FCNOMBRE, FCACCION, FDFECHAINIPRO, FDFECHAFINPRO, FIPAISCU, FICANALCU, FISUCURSALCU, FIFOLIOCU, FDFECHAHORAOPERACION, FIIMPORTETOTAL, FIIDOPERACION, FIIDPRODUCTO, FIIDESTATUS, FCUSUARIOEJECUCION, FIDAGENTE, FCFOLIOAUTORIZACION, FCREFERENCIA, FCCODIGOTERMINAL, FCNUMEROCONTRATO, FIIDCANALORIGEN, FIIDSUCURSALORIGEN, FCFOLIOEXPCORRESP, FCCODIGODIVISA, FIIDPAISPEDIDO, FIIDCANALPEDIDO, FIIDSUCURSALPEDIDO, FINUMEROPEDIDO, FCNUMEROTARJETA, FDFECHAHORAANBONO, FCIMPORTE, FIIDPROCESOPAGO, FIMONTOGEMA, FCIDTIPOPRODUCTO, FCIDTOKEN, FIFECHA, ULTIMA_MODIFICACION, USUARIO_MODIFICACION) " +
-                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(FCIDTRX, FDFECHAHORA, FCNOMBRE, FCACCION, FDFECHAINIPRO, FDFECHAFINPRO, FIPAISCU, FICANALCU, FISUCURSALCU, FIFOLIOCU, FDFECHAHORAOPERACION, FIIMPORTETOTAL, FIIDOPERACION, FIIDPRODUCTO, FIIDESTATUS, FCUSUARIOEJECUCION, FIDAGENTE, FCFOLIOAUTORIZACION, FCREFERENCIA, FCCODIGOTERMINAL, FCNUMEROCONTRATO, FIIDCANALORIGEN, FIIDSUCURSALORIGEN, FCFOLIOEXPCORRESP, FCCODIGODIVISA, FIIDPAISPEDIDO, FIIDCANALPEDIDO, FIIDSUCURSALPEDIDO, FINUMEROPEDIDO, FCNUMEROTARJETA, FDFECHAHORAANBONO, FCIMPORTE, FIIDPROCESOPAGO, FIMONTOGEMA, FCIDTIPOPRODUCTO, FCIDTOKEN, FIFECHA) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -47,18 +47,18 @@ public class PagoCreditoDAO {
             for (PagoCredito msg : pagos) {
                 // --- seteo de parámetros (igual que tu código original) ---
                 ps.setString(1, String.valueOf(msg.getTransaccion().getId()));
-                ps.setTimestamp(2, Timestamp.from(Instant.parse(msg.getTransaccion().getFechaHora())));
+                ps.setString(2, String.valueOf(msg.getTransaccion().getFechaHora()));
                 ps.setString(3, String.valueOf(String.valueOf(msg.getTransaccion().getNombre())));
                 ps.setString(4, String.valueOf(String.valueOf(msg.getTransaccion().getAccion())));
-                ps.setTimestamp(5,  Timestamp.from(Instant.parse(msg.getTransaccion().getFechaInicioProceso())));
-                ps.setTimestamp(6, Timestamp.from(Instant.parse(msg.getTransaccion().getFechaFinProceso())));
+                ps.setString(5,  String.valueOf(msg.getTransaccion().getFechaInicioProceso()));
+                ps.setString(6, String.valueOf(msg.getTransaccion().getFechaFinProceso()));
 
                 ps.setInt(7, msg.getOperacion().getClienteUnico().getPais());
                 ps.setInt(8, msg.getOperacion().getClienteUnico().getCanal());
                 ps.setInt(9, msg.getOperacion().getClienteUnico().getSucursal());
                 ps.setInt(10, msg.getOperacion().getClienteUnico().getFolio());
 
-                ps.setTimestamp(11,  Timestamp.from(Instant.parse(msg.getOperacion().getFechaHoraOperacion())));
+                ps.setString(11,  String.valueOf(msg.getOperacion().getFechaHoraOperacion()));
                 ps.setDouble(12, msg.getOperacion().getImporteTotal());
 
                 ps.setObject(13, msg.getOperacion().getIdOperacion(), Types.NUMERIC);
@@ -83,7 +83,7 @@ public class PagoCreditoDAO {
                 ps.setInt(29, msg.getOperacion().getNumeroPedido());
 
                 ps.setString(30, String.valueOf(msg.getOperacion().getNumeroTarjeta()));
-                ps.setTimestamp(31, Timestamp.from(Instant.parse(msg.getOperacion().getFechaHoraAbono())));
+                ps.setString(31, String.valueOf(msg.getOperacion().getFechaHoraAbono()));
                 ps.setString(32, String.valueOf(msg.getOperacion().getImporte()));
 
                 ps.setObject(33, msg.getOperacion().getIdProcesoPago(), Types.NUMERIC);
@@ -91,8 +91,7 @@ public class PagoCreditoDAO {
                 ps.setString(35, String.valueOf(msg.getOperacion().getIdTipoProducto()));
                 ps.setString(36, String.valueOf(msg.getOperacion().getIdToken()));
                 ps.setInt(37, fifecha);
-                ps.setTimestamp(38, Timestamp.valueOf(now));
-                ps.setString(39,"USRINSUMOS");
+
 
                 ps.addBatch();
                 count++;
