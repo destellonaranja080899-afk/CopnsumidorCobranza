@@ -90,8 +90,6 @@ public class PagoCreditoDAO {
                 ps.setObject(34, msg.getOperacion().getMontoGema(), Types.NUMERIC);
                 ps.setString(35, String.valueOf(msg.getOperacion().getIdTipoProducto()));
                 ps.setString(36, String.valueOf(msg.getOperacion().getIdToken()));
-                ps.setInt(37, fifecha);
-
 
                 ps.addBatch();
                 count++;
