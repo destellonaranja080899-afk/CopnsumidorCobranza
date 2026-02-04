@@ -33,8 +33,8 @@ public class PagoCreditoDAO {
         int fifecha = Integer.parseInt(formatted);
 
         String sql = "INSERT INTO SAGOCREDITO.TASAABONOCRED " +
-                "(FCIDTRX, FDFECHAHORA, FCNOMBRE, FCACCION, FDFECHAINIPRO, FDFECHAFINPRO, FIPAISCU, FICANALCU, FISUCURSALCU, FIFOLIOCU, FDFECHAHORAOPERACION, FIIMPORTETOTAL, FIIDOPERACION, FIIDPRODUCTO, FIIDESTATUS, FCUSUARIOEJECUCION, FIDAGENTE, FCFOLIOAUTORIZACION, FCREFERENCIA, FCCODIGOTERMINAL, FCNUMEROCONTRATO, FIIDCANALORIGEN, FIIDSUCURSALORIGEN, FCFOLIOEXPCORRESP, FCCODIGODIVISA, FIIDPAISPEDIDO, FIIDCANALPEDIDO, FIIDSUCURSALPEDIDO, FINUMEROPEDIDO, FCNUMEROTARJETA, FDFECHAHORAANBONO, FCIMPORTE, FIIDPROCESOPAGO, FIMONTOGEMA, FCIDTIPOPRODUCTO, FCIDTOKEN) " +
-                "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(FCIDTRX, FCFECHAHORA, FCNOMBRE, FCACCION, FCFECHAINIPRO, FCFECHAFINPRO, FIPAISCU, FICANALCU, FISUCURSALCU, FIFOLIOCU, FCFECHAHORAOPERACION, FIIMPORTETOTAL, FIIDOPERACION, FIIDPRODUCTO, FIIDESTATUS, FCUSUARIOEJECUCION, FIDAGENTE, FCFOLIOAUTORIZACION, FCREFERENCIA, FCCODIGOTERMINAL, FCNUMEROCONTRATO, FIIDCANALORIGEN, FIIDSUCURSALORIGEN, FCFOLIOEXPCORRESP, FCCODIGODIVISA, FIIDPAISPEDIDO, FIIDCANALPEDIDO, FIIDSUCURSALPEDIDO, FINUMEROPEDIDO, FCNUMEROTARJETA, FCFECHAHORAANBONO, FCIMPORTE, FIIDPROCESOPAGO, FIMONTOGEMA, FCIDTIPOPRODUCTO, FCIDTOKEN) " +
+                "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -47,18 +47,18 @@ public class PagoCreditoDAO {
             for (PagoCredito msg : pagos) {
                 // --- seteo de parámetros (igual que tu código original) ---
                 ps.setString(1, String.valueOf(msg.getTransaccion().getId()));
-                ps.setString(2, String.valueOf(msg.getTransaccion().getFechaHora()));
+                ps.setString(2,  String.valueOf(msg.getTransaccion().getFechaHora()));
                 ps.setString(3, String.valueOf(String.valueOf(msg.getTransaccion().getNombre())));
                 ps.setString(4, String.valueOf(String.valueOf(msg.getTransaccion().getAccion())));
-                ps.setString(5,  String.valueOf(msg.getTransaccion().getFechaInicioProceso()));
-                ps.setString(6, String.valueOf(msg.getTransaccion().getFechaFinProceso()));
+                ps.setString(5,   String.valueOf(msg.getTransaccion().getFechaInicioProceso()));
+                ps.setString(6,  String.valueOf(msg.getTransaccion().getFechaFinProceso()));
 
                 ps.setInt(7, msg.getOperacion().getClienteUnico().getPais());
                 ps.setInt(8, msg.getOperacion().getClienteUnico().getCanal());
                 ps.setInt(9, msg.getOperacion().getClienteUnico().getSucursal());
                 ps.setInt(10, msg.getOperacion().getClienteUnico().getFolio());
 
-                ps.setString(11,  String.valueOf(msg.getOperacion().getFechaHoraOperacion()));
+                ps.setString(11, String.valueOf(msg.getOperacion().getFechaHoraOperacion()));
                 ps.setDouble(12, msg.getOperacion().getImporteTotal());
 
                 ps.setObject(13, msg.getOperacion().getIdOperacion(), Types.NUMERIC);
@@ -83,7 +83,7 @@ public class PagoCreditoDAO {
                 ps.setInt(29, msg.getOperacion().getNumeroPedido());
 
                 ps.setString(30, String.valueOf(msg.getOperacion().getNumeroTarjeta()));
-                ps.setString(31, String.valueOf(msg.getOperacion().getFechaHoraAbono()));
+                ps.setString(31,  String.valueOf(msg.getOperacion().getFechaHoraAbono()));
                 ps.setString(32, String.valueOf(msg.getOperacion().getImporte()));
 
                 ps.setObject(33, msg.getOperacion().getIdProcesoPago(), Types.NUMERIC);
@@ -104,7 +104,7 @@ public class PagoCreditoDAO {
             if (count % batchSize != 0) {
                 ps.executeBatch();
                 con.commit();
-                LOGGER.info("Insertados {} registros en total.", count,"Proccess end Succesfully");
+                LOGGER.info("Insertados {} registros en total.", count);
             }
 
         } catch (SQLException e) {
@@ -113,4 +113,3 @@ public class PagoCreditoDAO {
         }
     }
 }
-
